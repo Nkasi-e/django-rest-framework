@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import TesView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('restapi.urls'))
+    path('api-auth/', include('rest_framework.urls')),
+    path('', TesView.as_view(), name='test') # reasons for adding the as_view is because the view used is a class base view, but using a function base view you the need the as_view()
 ]
