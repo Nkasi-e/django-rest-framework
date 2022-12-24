@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import TesView
+from rest_framework.authtoken.views import obtain_auth_token # to auto generate auth token for users
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('', TesView.as_view(), name='test') # reasons for adding the as_view is because the view used is a class base view, but using a function base view you the need the as_view()
+    path('', TesView.as_view(), name='test'), # reasons for adding the as_view is because the view used is a class base view, but using a function base view you the need the as_view()
+    path('api/token/', obtain_auth_token, name='obtain'),
 ]

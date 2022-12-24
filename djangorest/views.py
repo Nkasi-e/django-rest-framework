@@ -3,9 +3,13 @@ from rest_framework.views import APIView # importing from the django rest_framew
 from rest_framework.response import Response # to send back response
 from drfapp.serializers import StudentSerializer
 from drfapp.models import Student
+from rest_framework.permissions import IsAuthenticated # for authentication 
 
 
 class TesView(APIView):
+    # setting authentication
+    permission_classes = [IsAuthenticated]
+    
      # GET METHOD fn
     def get(self, request, *args, **kwargs):
         # data = {
@@ -15,7 +19,9 @@ class TesView(APIView):
         # }
         # serializing data in a get request
         qs = Student.objects.all()
-        serializer = StudentSerializer(qs, many=True) # many=True means it is more than one
+        # serializer = StudentSerializer(qs, many=True) # many=True means it is more than one
+        student1 = qs.first()
+        serializer = StudentSerializer(student1) # for single data
         return Response(serializer.data)
     
     # POST METHOD fn
